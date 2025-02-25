@@ -1,15 +1,28 @@
-import Blog from "../models/Blog.model.js"
-
+import Blog from '../models/Blog.model.js'
+//for creating blog
 export const createBlog = async (req, res, next) => {
     const { title, content, topic, image, ref, location } = req.body
     try {
-        let blog = new Blog({
+        const blog = new Blog({
             title, content, topic, image, ref, location
         })
         await blog.save()
-        res.status(200).json({success:true,message:"Blog saved successfully"})
+        res.status(200).json({ succes: true, message: "Blog Saved Successfully" })
+    } catch (error) {
+        res.status(500).json({ succes: false, message: "Internal Server Error" })
     }
-    catch (error) {
-        res.status(500).json({ success: false, message: "Internal server error" })
+}
+//for editing blog
+export const editBlog = async (req, res, next) => {
+    const blogId = req.params.id //using params i am getting the id
+    try {
+        const blog = await Blog.findById(blogId) //for checking id in db
+        if (!blog) {
+            res.status(404).json({ success: false, message: "Blog not found" })
+        }
+        await Blog.findByIdAndUpdate(blogId, { $set: req.body }, { new: true }) //updating data by using findByIdAndUpdate
+        res.status(200).json({ success: true, message: "Blog Updated"}) //"" is not required because at first it obj when it touches express.json() it will be in obje by using json we are telling we need to convert this obj to json format
+    } catch (error) {
+        res.status(500).json({ success: false, message: "Internal Server Error" })
     }
 }
