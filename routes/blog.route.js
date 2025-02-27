@@ -1,7 +1,8 @@
 import express from "express"
-import { createBlog, editBlog, getBlog } from "../controllers/blog.controller.js"
+import { createBlog, editBlog, getBlog, getBlogs } from "../controllers/blog.controller.js"
 const route = express.Router()
-route.post("/createblog", createBlog)
-route.put("/editblog/:id",editBlog)
-route.get("/getblog/:id",getBlog)
+route.post("/api/v1/create/createblog", createBlog)
+route.put("/api/v1/edit/editblog/:id",editBlog)
+route.get("/api/v1/get/getsingleblog/:id",getBlog)
+route.get("/api/v1/getall/getblogs",getBlogs)
 export default route

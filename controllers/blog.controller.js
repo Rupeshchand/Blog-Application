@@ -46,3 +46,14 @@ export const getBlog = async (req, res, next) => {
         res.status(500).json({ success: false, message: "Internal Server Error" })
     }
 }
+
+//for getting all blogs
+export const getBlogs = async(req,res,next)=>{
+    try{
+        const blogs = await Blog.find()
+        return res.status(200).json({success:true,message:"Blogs Found",data:blogs})
+    }
+    catch{
+        res.status(500).json({success:false,text:"Internal Server Error"})
+    }
+}
