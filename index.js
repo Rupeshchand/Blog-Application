@@ -13,7 +13,7 @@ const port = process.env.PORT || 8080
 // app.use(cors({
 //     origin: ["http://localhost:3000/"], //it will allow 3000 port to access data from server
 //     methods: "GET,POST,PUT,PATCH,DELETE,HEAD",
-//     credentials: true //to perform autherization it will allow us to send passwords
+//     credentials: true //to perform authorization it will allow us to send passwords
 // }))
 // app.use(cors({
 //     origin: function(origin,cb){
@@ -26,7 +26,7 @@ app.use(cors({
 }))
 app.use(cookieParser()) //before server is starting cookies will be parsed
 app.use(express.json()) //to parse json data
-app.use(blogRouter)
+app.use("/api/v1/blog",blogRouter)
 const connectDB = async () => {
     try {
         await mongoose.connect(process.env.MONGO_URI)

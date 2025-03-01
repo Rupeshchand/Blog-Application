@@ -43,7 +43,7 @@ export const getBlog = async (req, res, next) => {
 
     }
     catch (error) {
-        res.status(500).json({ success: false, message: "Internal Server Error" })
+       return res.status(500).json({ success: false, message: "Internal Server Error" })
     }
 }
 
@@ -54,6 +54,34 @@ export const getBlogs = async(req,res,next)=>{
         return res.status(200).json({success:true,message:"Blogs Found",data:blogs})
     }
     catch{
-        res.status(500).json({success:false,text:"Internal Server Error"})
+        return res.status(500).json({success:false,text:"Internal Server Error"})
+    }
+}
+
+//getting blog by topic
+export const getBlogByTopic = async(req,res,next)=>{
+    const t = req.params.topic 
+    try {
+        const blogs = await Blog.find({topic: new RegExp(t,"i")})
+        if(!blogs || blogs.length === 0){
+            return res.status(404).json({success:false,message:`Topic not found on ${t}`})
+        }
+        res.status(200).json({success:true,message:"Topic found",data:blogs})
+    } catch (error) {
+        return res.status(500).json({success:false,message:"Server Error"})
+    }
+}
+
+//get blog query parameters
+export const getBlogByQueryTopic = async(req,res,next)=>{
+    const topic = req.query.t
+    try {
+        const blogs = await Blog.find({topic : new RegExp(topic,"i")})
+        if(!blogs || blogs.length === 0){
+            return res.status(404).json({success:false,message:`not found on query ${topic}`})
+        }
+        return res.status(200).json({success:true,message: `Blog found query ${topic}`,data:blogs})
+    } catch (error) {
+        return res.status(500).json({success:false,text:"Internal Server Error"})
     }
 }

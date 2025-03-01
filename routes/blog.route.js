@@ -1,8 +1,12 @@
 import express from "express"
-import { createBlog, editBlog, getBlog, getBlogs } from "../controllers/blog.controller.js"
+import { createBlog, editBlog, getBlog, getBlogByQueryTopic, getBlogByTopic, getBlogs } from "../controllers/blog.controller.js"
 const route = express.Router()
-route.post("/api/v1/create/createblog", createBlog)
-route.put("/api/v1/edit/editblog/:id",editBlog)
-route.get("/api/v1/get/getsingleblog/:id",getBlog)
-route.get("/api/v1/getall/getblogs",getBlogs)
+route.post("/createblog", createBlog)
+route.put("/editblog/:id",editBlog)
+route.get("/getsingleblog/:id",getBlog)
+route.get("/getblogs",getBlogs)
+route.get("/getblogbytopic/:topic",getBlogByTopic)
+
+//http://localhost:8080/api/v1/blog/blogbyquery/?topic=js
+route.get("/blogbyquery",getBlogByQueryTopic)
 export default route
