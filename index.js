@@ -8,6 +8,7 @@ import mongoose from "mongoose"
 import dotenv from "dotenv"
 dotenv.config()//help u to config dotenv files
 import blogRouter from './routes/blog.route.js'
+import authRouter from './routes/auth.route.js'
 const app = express()
 const port = process.env.PORT || 8080
 // app.use(cors({
@@ -27,6 +28,7 @@ app.use(cors({
 app.use(cookieParser()) //before server is starting cookies will be parsed
 app.use(express.json()) //to parse json data
 app.use("/api/v1/blog",blogRouter)
+app.use("/api/v1/auth/",authRouter)
 const connectDB = async () => {
     try {
         await mongoose.connect(process.env.MONGO_URI)
