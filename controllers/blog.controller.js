@@ -87,7 +87,6 @@ export const getBlogByQueryTopic = async (req, res, next) => {
 }
 
 //delete a blog
-
 export const deleteBlog = async (req, res, next) => {
     const blogId = await req.params.id
     try {

@@ -7,8 +7,9 @@ import mongoose from "mongoose"
 //allow to have access of env data to all the files
 import dotenv from "dotenv"
 dotenv.config()//help u to config dotenv files
-import blogRouter from './routes/blog.route.js'
-import authRouter from './routes/auth.route.js'
+import blogRouter from './routes/blog.routes.js'
+import authRouter from './routes/auth.routes.js'
+import userRouter from './routes/user.routes.js'
 const app = express()
 const port = process.env.PORT || 8080
 // app.use(cors({
@@ -29,6 +30,7 @@ app.use(cookieParser()) //before server is starting cookies will be parsed
 app.use(express.json()) //to parse json data
 app.use("/api/v1/blog",blogRouter)
 app.use("/api/v1/auth/",authRouter)
+app.use("/api/v1/user/",userRouter)
 const connectDB = async () => {
     try {
         await mongoose.connect(process.env.MONGO_URI)
