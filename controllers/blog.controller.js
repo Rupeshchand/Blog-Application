@@ -1,4 +1,4 @@
-import mongoose, { Mongoose } from 'mongoose'
+import mongoose from 'mongoose'
 import Blog from '../models/Blog.model.js'
 //for creating blog
 export const createBlog = async (req, res, next) => {

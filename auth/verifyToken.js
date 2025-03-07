@@ -13,7 +13,6 @@ export const authenticate = async (req, res, next) => {
         const token = authToken.split(' ')[1]
         //verifying the token if it matches it is going to send user payload
         const validatedToken = jwt.verify(token, process.env.JWT_SECRET_KEY)
-        console.log("TOken",validatedToken)
         req.userId = validatedToken.id
         req.role = validatedToken.role
         req.username = validatedToken.username
@@ -30,7 +29,6 @@ export const authenticate = async (req, res, next) => {
 export const restrict = (roles)=> async(req,res,next)=>{
     try {
         const userId = req.userId //i am getting it after user loggedin we have this in authenticate
-        console.log(userId)
         const user = await User.findById(userId) //that id i'm checking in db whether it is there or not
         //here no need of checking the error again bcse this id we got after authenticating \
         const userRole = user.role

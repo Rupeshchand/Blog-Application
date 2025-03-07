@@ -9,6 +9,7 @@ import jwt from 'jsonwebtoken'
 //     }
 //     console.log(buffer.toString('hex'))
 // })
+
 //register user
 export const registerUser = async (req, res, next) => {
     const { userName, name, email, password, phone, role } = req.body
