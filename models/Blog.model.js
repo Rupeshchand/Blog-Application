@@ -22,13 +22,9 @@ const blogSchema = new mongoose.Schema({
         default: Date.now()
     },
     location:String,
-    // user:{
-    //     id:{
-
-    //     },
-    //     name:{
-
-    //     }
+    // author:{
+    //     id: req.userId,
+    //     name: req.username
     // }
 })
 export default mongoose.model("Blog", blogSchema)

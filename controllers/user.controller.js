@@ -26,8 +26,8 @@ export const updateUser = async (req, res, next) => {
             return res.status(404).json({ success: false, message: "User not found" })
         }
         const updateUser = await User.findByIdAndUpdate(userId, { $set: req.body }, { new: true })
-        const {password,...rest} = updateUser._doc
-         return res.status(200).json({ success: true, message: "User updated", user: {...rest} })
+        const { password, ...rest } = updateUser._doc
+        return res.status(200).json({ success: true, message: "User updated", user: { ...rest } })
     } catch (error) {
         return res.status(500).json({ success: false, message: "Internal Server Error" })
     }
@@ -46,6 +46,24 @@ export const deleteUser = async (req, res, next) => {
         }
         await User.findByIdAndDelete(userId)
         return res.status(200).json({ success: true, message: "User Deleted" })
+    } catch (error) {
+        return res.status(500).json({ success: false, message: "Internal server error" })
+    }
+}
+
+//for getting single user profile
+export const getSingleUserProfile = async (req, res, next) => {
+    const userId = req.userId
+    try {
+        if (!mongoose.Types.ObjectId.isValid(userId)) {
+            return res.status(400).json({ success: false, message: "Invalid User ID" })
+        }
+        const user = await User.findById(userId)
+        if (!user) {
+            return res.status(404).json({ success: false, message: "User not found" })
+        }
+        const { password, ...rest } = user._doc
+        return res.status(200).json({ success: true, message: "User found", data: {...rest} })
     } catch (error) {
         return res.status(500).json({ success: false, message: "Internal server error" })
     }
