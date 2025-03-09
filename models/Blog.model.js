@@ -21,10 +21,17 @@ const blogSchema = new mongoose.Schema({
         type: Date,
         default: Date.now()
     },
-    location:String,
-    // author:{
-    //     id: req.userId,
-    //     name: req.username
-    // }
+    location: String,
+    author: {
+        id: {
+            type: mongoose.Schema.Types.ObjectId, //connecting blog schema to user schema bcse it contains user data
+            ref: "User", //give the User schema reference
+            required: true
+        },
+        name: {
+            type: String,
+            required: true
+        }
+    }
 })
 export default mongoose.model("Blog", blogSchema)

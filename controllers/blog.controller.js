@@ -1,16 +1,22 @@
 import mongoose from 'mongoose'
 import Blog from '../models/Blog.model.js'
+import User from '../models/User.model.js'
+
 //for creating blog
 export const createBlog = async (req, res, next) => {
     const { title, content, topic, image, ref, location } = req.body
+    const userId = req.userId
     try {
+        //another way for gettting userId and name bcs findByone will give obj if it is correct
+        const user = await User.findById(userId)
         const blog = new Blog({
-            title, content, topic, image, ref, location
+            title, content, topic, image, ref, location, author: { id: userId, name: user.name }//req.name
         })
         await blog.save()
-        return res.status(200).json({ succes: true, message: "Blog Saved Successfully" })
+        return res.status(200).json({ success: true, message: "Blog Saved Successfully" })
     } catch (error) {
-        return res.status(500).json({ succes: false, message: "Internal Server Error" })
+        console.log(error)
+        return res.status(500).json({ success: false, message: "Internal Server Error" })
     }
 }
 //for editing blog
