@@ -45,7 +45,7 @@ export const getBlog = async (req, res, next) => {
         if (!blog) {
             return res.status(404).json({ success: false, message: "Blog not found" })
         }
-        return res.status(200).json({ success: true, message: "Blog Found" })
+        return res.status(200).json({ success: true, message: "Blog Found",data:blog })
 
     }
     catch (error) {
