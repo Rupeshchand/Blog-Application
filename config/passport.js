@@ -1,6 +1,8 @@
 import passport from 'passport'
 import { Strategy as GoogleStrategy } from 'passport-google-oauth20'
-import User from '../models/User.model'
+import User from '../models/User.model.js'
+import dotenv from "dotenv"
+dotenv.config()
 
 passport.use(new GoogleStrategy({
     clientID: process.env.GOOGLE_CLIENT_ID,
@@ -21,6 +23,7 @@ passport.use(new GoogleStrategy({
                     role: 'user'
                 });
             }
+            console.log(user)
             done(null, user);
         } catch (err) {
             done(err, null);
@@ -36,3 +39,5 @@ passport.deserializeUser(async (id, done) => {
     const user = await User.findById(id);
     done(null, user);
 });
+
+export default passport

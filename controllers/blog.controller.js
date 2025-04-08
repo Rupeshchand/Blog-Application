@@ -27,7 +27,7 @@ export const editBlog = async (req, res, next) => {
         if (!blog) {
             return res.status(404).json({ success: false, message: "Blog not found" })
         }
-        await Blog.findByIdAndUpdate(blogId, { $set: req.body }, { new: true }) //updating data by using findByIdAndUpdate
+        await Blog.findByIdAndUpdate(blogId, { $set: req.body }, { new: true }) //updating data by using findByIdAndUpdate set is used updating specific data and new is updating new data
         return res.status(200).json({ success: true, message: "Blog Updated" }) //"" is not required because at first it obj when it touches express.json() it will be in obje by using json we are telling we need to convert this obj to json format
     } catch (error) {
         return res.status(500).json({ success: false, message: "Internal Server Error" })

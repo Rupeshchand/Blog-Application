@@ -1,19 +1,18 @@
-import express from "express"
+//allow to have access of env data to all the files
+import dotenv from "dotenv";
+dotenv.config()//help u to config dotenv files
+import express from "express";
 //before route is getting executed we need to tell the server that data which we are getting from client to server if we are getting that data in headers we need to parse the data
 import cookieParser from "cookie-parser"
 //for creating proxy server, we can share info from c tp s or s to c. To tell browser the server is safe. 
 import cors from "cors"
 import mongoose from "mongoose"
-import path from 'path'
 import blogRouter from './routes/blog.routes.js'
 import authRouter from './routes/auth.routes.js'
 import userRouter from './routes/user.routes.js'
-import passport from 'passport'
+import passport from './config/passport.js'
 import session from 'express-session'
 
-//allow to have access of env data to all the files
-import dotenv from "dotenv"
-dotenv.config()//help u to config dotenv files
 
 const app = express()
 const port = process.env.PORT || 8080
@@ -39,7 +38,7 @@ const port = process.env.PORT || 8080
   
 // app.use(cors(corsOptions));
 
-const allowedLinks = ["http://localhost:5173"]
+const allowedLinks = ["*","http://localhost:5173", "https://blogger-six-lake.vercel.app"]
 app.use(cors({
     origin: function(origin,callback){
         if(!origin || allowedLinks.includes(origin)){
@@ -51,7 +50,7 @@ app.use(cors({
     },
     credentials: true,
     methods:["GET","POST","PUT","DELETE"],
-    allowedHeaders: ["Content-Type","Autherization"]
+    allowedHeaders: ["Content-Type","Authorization"]
 }))
 app.use(cookieParser()) //before server is starting cookies will be parsed
 app.use(express.json()) //to parse json data
